@@ -13,11 +13,23 @@ class UserController extends Controller
 {
     public function show(User $user)
     {
+        $items = null;
+
+        switch ($user->role) {
+            case 'customer':
+                $items = (new PrintRequestController)->getByUserId($user->id);
+                break;
+            case 'printshop':
+                $items = (new CatalogueController)->getByUserId($user->id);
+                break;
+            default:
+                $items = collect(); // Empty collection if no role matches
+                break;
+        }
+
         return view('users.show', [
             'user' => $user,
-            'tweets' => $user->tweets()
-            ->withLikes()
-            ->paginate(50),
+            'items' => $items,
         ]);
     }
 

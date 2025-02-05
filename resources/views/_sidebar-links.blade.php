@@ -1,4 +1,4 @@
-<ul>
+{{-- <ul>
   <li> 
     <a class="font-bold text-lg mb-4 block" 
     href="/tweets">
@@ -40,4 +40,4 @@
       <button class="font-bold text-lg mb-4 block">Logout</button>
     </form>
   </li>
-</ul>
+</ul> --}}
