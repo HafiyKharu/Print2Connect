@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ExploreController;
-use App\Http\Controllers\TweetController;
 use App\Http\Controllers\TweetLikesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FollowController;
