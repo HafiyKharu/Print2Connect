@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PrintShops;
 use Illuminate\Http\Request;
-use App\Mail\ApproveOrRejectAccount;
+use App\Mail\TemplateEmail;
 use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
@@ -27,7 +27,7 @@ class AdminController extends Controller
             'printshop' => $printshop,
             'closer' => "Your account is now active 🥳. You can now login and start using our services. Welcome to Print2Connect! 😄",
         ];
-        Mail::to($printshop->user->email)->send(new ApproveOrRejectAccount($details));
+        Mail::to($printshop->user->email)->send(new TemplateEmail($details));
 
         return redirect()->back()->with('success', 'Print shop approved and email sent.');
     }
@@ -52,7 +52,7 @@ class AdminController extends Controller
             'printshop' => $printshop,
             'closer' => "We reviewed your application and found it's not satisfactory 😓.Your account had been removed. We hope you can apply again in the future. Thank you for your interest in Print2Connect. 😊",
         ];
-        Mail::to($printshop->user->email)->send(new ApproveOrRejectAccount($details));
+        Mail::to($printshop->user->email)->send(new TemplateEmail($details));
 
         return redirect()->back()->with('success', 'Print shop rejected and email sent.');
     }

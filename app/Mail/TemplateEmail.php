@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ApproveOrRejectAccount extends Mailable
+class TemplateEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -33,6 +33,12 @@ class ApproveOrRejectAccount extends Mailable
     public function build()
     {
         return $this->subject('Mail from Print2Connect')
-                    ->view('emails.approveOrRejectAccount');
+                    ->view('emails.templateEmail');
+    }
+    public function attachments(): array
+    {
+        return [
+            storage_path('app/public/logo/PRINT2CONNECT.png'), // Adjust path as needed
+        ];
     }
 }
