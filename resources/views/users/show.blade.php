@@ -48,6 +48,6 @@
   </header>
 
   @include('_timeline', [
-    'tweets' => $tweets
+      'printRequest' => $printRequest
   ])
 </x-app-layout>

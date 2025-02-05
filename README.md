@@ -62,7 +62,7 @@ To use/run tweety you need to configure your mysql database and add database det
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=tweety
+DB_DATABASE=print2connect
 DB_USERNAME=<your database username>
 DB_PASSWORD=<your database password>
 ```

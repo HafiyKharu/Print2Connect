@@ -1,8 +1,13 @@
 <div class="border border-gray-300 rounded-lg">
-  @forelse ($tweets as $tweet)
-    @include('_tweet')
+  @forelse ($printRequests as $printRequest)
+        <div class="mb-4">
+            @include('post_print_requests._printrequest', ['printRequest' => $printRequest])
+        </div>
+    {{-- @elseif ($item instanceof App\Models\Catalogue)
+      @include('catalogues.index', ['catalogue' => $item])
+    @endif --}}
   @empty
-    <p class="p-4">Nothing yet, tweet something.</p>
+    <p class="p-4">Nothing yet, post something.</p>
   @endforelse
-  {{ $tweets->links()}}
+  {{ $items->links() }}
 </div>

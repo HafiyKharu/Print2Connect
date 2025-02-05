@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Tweet;
+use app\Models\PostPrintRequest;
+use app\Models\Catalogue;
 
 class User extends Authenticatable
 {
@@ -19,6 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'role',
         'username',
         'name',
         'email',
@@ -62,15 +65,24 @@ class User extends Authenticatable
     // {
     //     $this->validated['password'] = (Hash::needsRehash($value)) ? bcrypt($value) : $value;
     // }
-
     public function timeline()
     {
         $ids = $this->follows()->pluck('id');
         $ids->push($this->id);
-        return Tweet::whereIn('user_id', $ids)
-        ->withLikes()
-        ->latest()
-        ->paginate(50);
+    
+        switch ($this->role) {
+            case 'customer':
+                return PostPrintRequest::whereIn('user_id', $ids)
+                    ->with('user', 'comments.user')
+                    ->latest()
+                    ->paginate(50);
+            case 'printshop':
+                return Catalogue::whereIn('user_id', $ids)
+                    ->latest()
+                    ->paginate(50);
+            default:
+                return null;
+        }
     }
 
     public function tweets()
