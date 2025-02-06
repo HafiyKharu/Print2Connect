@@ -39,25 +39,13 @@
 
   </header>
 
-  <div class="border border-gray-300 rounded-lg">
-  @if (auth()->user()->role === 'admin')
-    <p class="p-4">yo admin</p>
-  @elseif (auth()->user()->role === 'print shop')
-    @forelse ($catalogues as $catalogue)
-    <div class="mb-4">
-    @include('catalogues._catalogues', ['catalogue' => $catalogue])
-    </div>
-  @empty
-  <p class="p-4">No catalogues. Create one!</p>
-@endforelse
-  @elseif (auth()->user()->role === 'customer')
-    @forelse ($printRequests as $printRequest)
-    <div class="mb-4">
-    @include('post_print_requests._printrequest', ['printRequest' => $printRequest])
-    </div>
-  @empty
-  <p class="p-4">No print requests. Create one!</p>
-@endforelse
+  @if(!empty($printRequests))
+      @include('users._timelineService', [
+          'printRequest' => $printRequests
+      ])
+  @elseif(!empty($catalogues))
+      @include('users._timelineCatalogue', [
+          'catalogue' => $catalogues
+      ])
   @endif
-  </div>
 </x-app-layout>

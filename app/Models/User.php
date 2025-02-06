@@ -8,8 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Tweet;
-use app\Models\PostPrintRequest;
-use app\Models\Catalogue;
+use App\Models\PostPrintRequest;
+use App\Models\Catalogue;
 
 class User extends Authenticatable
 {
@@ -89,6 +89,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Tweet::class)->latest();
     }
+    public function postPrintRequests()
+    {
+        return $this->hasMany(PostPrintRequest::class)->latest();
+    }
+
+    public function catalogues()
+    {
+        return $this->hasMany(Catalogue::class)->latest();
+    }
+
 
     public function follow(User $user)
     {

@@ -92,8 +92,4 @@ class PrintRequestController extends Controller
         $printShop = PrintShops::where('user_id', $id)->first();
         return $printShop ? $printShop->id : null;
     }
-    public function getPrintRequestsByUserId($userId)
-{
-    return PostPrintRequest::where('user_id', $userId)->get();
-}
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\PostPrintRequest; // Add this line
+use App\Models\Catalogue; // Add this line if not already present
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Unique;
 use Illuminate\Support\Facades\Hash;
@@ -17,12 +19,16 @@ class UserController extends Controller
         $catalogues = [];
     
         if ($user->role === 'customer') {
-            $printRequests = app(PrintRequestController::class)->getPrintRequestsByUserId($user->id);
+            $printRequests = $user->postPrintRequests()->paginate(50);
         } elseif ($user->role === 'print shop') {
-            $catalogues = app(CatalogueController::class)->getCataloguesByUserId($user->id);
+            $catalogues = $user->catalogues()->paginate(50);
         }
-    
-        return view('users.show', compact('user', 'printRequests', 'catalogues'));
+
+        return view('users.show', [
+            'user' => $user,
+            'printRequests' => $printRequests,
+            'catalogues' => $catalogues,
+        ]);
     }
 
     public function edit(User $user)
