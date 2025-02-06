@@ -1,6 +1,5 @@
-<!-- filepath: /c:/laragon/www/Print2Connect/resources/views/post_print_requests/_publish-postprintrequest-panel.blade.php -->
 <div class="border border-blue-400 rounded-lg py-4 px-4 mb-6">
-    <form action="{{ route('post_print_requests.store') }}" method="POST">
+    <form id="postPrintRequestForm" action="{{ route('post_print_requests.store') }}" method="POST">
         @csrf
 
         <div class="mb-4">
@@ -34,6 +33,7 @@
                 id="quantity" 
                 class="w-full border rounded-lg"
                 required
+                min="1"
             />
         </div>
 
@@ -48,13 +48,6 @@
             min="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}"
             />
         </div>
-
-        <button 
-            type="submit"
-            class="bg-blue-500 rounded-lg shadow py-2 px-4 text-white hover:bg-blue-900"
-        >
-            Post Print Request
-        </button>
     </form>
 
     @error('printType')

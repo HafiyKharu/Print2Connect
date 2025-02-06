@@ -2,36 +2,50 @@
 <x-app-layout>
 
     <!-- Search form -->
-    <form method="GET" action="{{ route('post_print_requests.index') }}" class="mb-4">
-        <input 
-            type="text" 
-            name="search" 
-            placeholder="Search by print type or description..." 
-            class="border rounded p-2 w-full"
-            value="{{ request('search') }}"
-        >
-        <button 
-            type="submit"
-            class="bg-blue-500 text-white px-3 py-1 rounded mt-2 hover:bg-blue-800"
-        >
+    <form  method="GET" action="{{ route('post_print_requests.index') }}" class="mb-4">
+        <input type="text" name="search" placeholder="Search by print type or description..."
+            class="border rounded p-2 w-full" value="{{ request('search') }}">
+        <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded mt-2 hover:bg-blue-800">
             Search
         </button>
     </form>
 
     <!-- Only show "Post Print Request" form if user is a customer -->
     @if(auth()->check() && auth()->user()->role === 'customer')
-        <div class="mb-4">
-            <button
-                type="button"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                onclick="togglePostPrintRequestPanel()"
-            >
+        <!-- Vertically centered scrollable modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postPrintRequestModal">
+            Post Print Service Request
+        </button>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="postPrintRequestModal" tabindex="-1" aria-labelledby="postPrintRequestModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="postPrintRequestModalLabel">Post Print Request</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @include('post_print_requests._publish-postprintrequest-panel')
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" form="postPrintRequestForm" class="btn btn-primary">Post Print Request</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- <div class="mb-4">
+            <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                onclick="togglePostPrintRequestPanel()">
                 Post Print Request
             </button>
         </div>
         <div id="postPrintRequestPanel" style="display:none;">
             @include('post_print_requests._publish-postprintrequest-panel')
-        </div>
+        </div> --}}
     @endif
 
     @if(session()->has('success'))
@@ -40,24 +54,24 @@
             <span class="text-sm text-gray-500">(click to dismiss)</span>
         </div>
     @endif
-    
-<div class="border border-gray-300 rounded-lg">
-    @forelse ($printRequests as $printRequest)
-        <div class="mb-4">
-            @include('post_print_requests._printrequest', ['printRequest' => $printRequest])
-        </div>
-    @empty
-        <p class="p-4">No print requests. Create one!</p>
-    @endforelse
 
-    {{ $printRequests->links() }}
-</div>
+    <div class="border border-gray-300 rounded-lg">
+        @forelse ($printRequests as $printRequest)
+            <div class="mb-4">
+                @include('post_print_requests._printrequest', ['printRequest' => $printRequest])
+            </div>
+        @empty
+            <p class="p-4">No print requests. Create one!</p>
+        @endforelse
+
+        {{ $printRequests->links() }}
+    </div>
 
     <script>
         function togglePostPrintRequestPanel() {
             let panel = document.getElementById('postPrintRequestPanel');
-            panel.style.display = (panel.style.display === 'none' || panel.style.display === '') 
-                ? 'block' 
+            panel.style.display = (panel.style.display === 'none' || panel.style.display === '')
+                ? 'block'
                 : 'none';
         }
     </script>
