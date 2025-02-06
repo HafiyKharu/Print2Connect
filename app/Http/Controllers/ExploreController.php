@@ -11,10 +11,22 @@ class ExploreController extends Controller
     {
         $this->middleware('auth');
     }
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+
+        $customers = User::where('role', 'customer')
+            ->where('username', 'like', '%' . $search . '%')
+            ->get();
+
+        $printShops = User::where('role', 'print shop')
+            ->where('username', 'like', '%' . $search . '%')
+            ->get();
+
         return view('explore', [
-            'users' => User::paginate(50),
+            'customers' => $customers,
+            'printShops' => $printShops,
+            'search' => $search,
         ]);
     }
 }

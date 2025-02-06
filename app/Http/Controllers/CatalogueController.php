@@ -40,11 +40,13 @@ class CatalogueController extends Controller
             'description' => 'required|string',
             'start' => 'required|date',
             'end' => 'required|date',
+            'catalogueImages' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if (request('catalogueImages')) {
             $validated['catalogueImages'] = request('catalogueImages')->store('catalogueImages');
         }
+        
 
         $validated['user_id'] = auth()->id();
 

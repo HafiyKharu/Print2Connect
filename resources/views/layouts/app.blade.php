@@ -61,7 +61,7 @@
                         </main>
                     </div>
 
-                    <div class="lg:w-1/6 p-2 rounded-lg">
+                    <div class="lg:w-1/6 p-2 rounded-lg mt-4">
                         @include('_friends-list')
                     </div>
 

@@ -1,15 +1,16 @@
 <x-guest-layout>
-    <x-auth-card>
+    <div class="mb-4">
+    <x-auth-card >
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <x-application-logo class="img-fluid" />
             </a>
         </x-slot>
 
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form method="POST" action="{{ route('register.customer') }}">
+        <form  method="POST" action="{{ route('register.customer') }}">
             @csrf
 
             <!-- Username -->
@@ -63,4 +64,5 @@
             </div>
         </form>
     </x-auth-card>
+</div>
 </x-guest-layout>

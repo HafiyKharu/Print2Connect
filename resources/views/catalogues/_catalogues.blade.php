@@ -36,13 +36,13 @@
                     <tr>
                         <td><strong>Start date of the promotion</strong></td>
                         <td class="p-2">:</td>
-                        <td class="p-2">{{ \Carbon\Carbon::parse($catalogue->start)->format('h:i A d/m/Y') ?? 'N/A' }}
+                        <td class="p-2">{{ \Carbon\Carbon::parse($catalogue->start)->format('d/m/Y') ?? 'N/A' }}
                         </td>
                     </tr>
                     <tr>
                         <td><strong>End date of the promotion</strong></td>
                         <td class="p-2">:</td>
-                        <td class="p-2">{{ \Carbon\Carbon::parse($catalogue->end)->format('h:i A d/m/Y') ?? 'N/A' }}
+                        <td class="p-2">{{ \Carbon\Carbon::parse($catalogue->end)->format('d/m/Y') ?? 'N/A' }}
                         </td>
                     </tr>
                 </tbody>
@@ -50,25 +50,26 @@
         </div>
         <br />
         <div class="text-center">
-            <img src="{{ Storage::url($catalogue->catalogueImages)}}" class="rounded mx-auto d-block" alt="catalogue"
-                width="300" height="300">
-            {{-- <button onclick="toggleFullscreen(this)"
-                class="bg-blue-500 text-white px-2 py-1 rounded mt-2 hover:bg-blue-600 center">
-                Fullscreen
-            </button> --}}
+            <img src="{{ Storage::url($catalogue->catalogueImages) }}" class="rounded mx-auto d-block" alt="catalogue"
+                width="300" height="300" data-toggle="modal" data-target="#imageModal" style="cursor: pointer;">
         </div>
-        {{--
-        <script>
-            function toggleFullscreen(button) {
-                const container = button.closest('.flex');
-                if (!document.fullscreenElement) {
-                    container.requestFullscreen().catch(err => {
-                        alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-                    });
-                } else {
-                    document.exitFullscreen();
-                }
-            }
-        </script> --}}
+        
+        <!-- Modal -->
+        <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="{{ Storage::url($catalogue->catalogueImages) }}" alt="catalogue" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
     </div>
 </div>

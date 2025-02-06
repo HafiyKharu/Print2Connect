@@ -78,7 +78,13 @@
                     <tr>
                         <td><strong>Status of request</strong></td>
                         <td class="p-2">:</td>
-                        <td class="p-2">{{ $printRequest->status}}</td>
+                        <td class="p-2">
+                            @if($printRequest->status == 'opened')
+                                <span class="badge badge-info">{{ $printRequest->status }}</span>
+                            @elseif($printRequest->status == 'accepted')
+                                <span class="badge badge-success">{{ $printRequest->status }}</span>
+                                @endif
+                        </td>
                     </tr>
                 </tbody>
             </table>

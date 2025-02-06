@@ -1,47 +1,61 @@
+<!-- filepath: /c:/laragon/www/Print2Connect/resources/views/post_print_requests/index.blade.php -->
 <x-app-layout>
-
-<!-- Search form -->
-    <form method="GET" action="{{ route('catalogues.index') }}" class="mb-4">
-        <input 
-            type="text" 
-            name="search" 
-            placeholder="Search by title of print service or description..." 
-            class="border rounded p-2 w-full"
-            value="{{ request('search') }}"
-        >
-        <button 
-            type="submit"
-            class="bg-blue-500 text-white px-3 py-1 rounded mt-2 hover:bg-blue-800"
-        >
-            Search
-        </button>
+    <form id="search" method="GET" action="{{ route('catalogues.index') }}" class="mb-4 mt-4">
+        <input type="text" name="search" placeholder="Search by title of catalogue or description..."
+            class="border rounded p-2 w-full" value="{{ request('search') }}">
     </form>
-
-    @if(session('error'))
-        <div class="bg-red-200 text-red-800 p-2 rounded mb-2">
-            {{ session('error') }}
+    <!-- Search form -->
+    <div class="flex justify-between mb-4">
+        <div>
+            <button type="submit" class="btn btn-primary" form="search">
+                Search
+            </button>
+        </div>
+        <!-- Only show "Post Print Request" form if user is a customer -->
+        <div >
+            @if(auth()->check() && auth()->user()->role === 'print shop')
+                <!-- Vertically centered scrollable modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postCatalogue">
+                    Post Print Service Request
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="postCatalogue" tabindex="-1" 
+                    aria-labelledby="postCatalogue" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="postCatalogue">Post Print Request</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                @include('catalogues._postCatalogue')
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" form="postCatalogueForm" class="btn btn-primary">Post Print
+                                    Request</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        </div>
+    </div>
+    @if(session()->has('success'))
+        <div class="border-gray-500 bg-green-400 p-2 w-full mb-2 rounded-lg" onclick="this.style.display='none'">
+            {{session()->get('success')}}
+            <span class="text-sm text-gray-500">(click to dismiss)</span>
         </div>
     @endif
-
-    @if(auth()->check() && auth()->user()->role === 'print shop')
-        <div id="postCatalogue">
-            @include('catalogues._postCatalogue')
-        </div>
-    @endif
-
-    @if(session('success'))
-        <div class="bg-green-200 text-green-800 p-2 rounded mb-2">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <div class="border border-gray-300 rounded-lg">
         @forelse ($catalogues as $catalogue)
             <div class="mb-4">
                 @include('catalogues._catalogues', ['catalogue' => $catalogue])
             </div>
         @empty
-            <p class="p-4">No print requests. Create one!</p>
+            <p class="p-4">No catalogues. Create one!</p>
         @endforelse
     </div>
 </x-app-layout>

@@ -1,18 +1,16 @@
 <div class="border border-blue-400 rounded-lg py-4 px-4 mb-6">
     <form id="postPrintRequestForm" action="{{ route('post_print_requests.store') }}" method="POST">
         @csrf
-
         <div class="mb-4">
             <label for="printType" class="block font-bold mb-1">Print Type</label>
-            <select name="printType" id="printType" class="w-full border rounded-lg" required>
-                <option value="">Select Print Type</option>
-                <option value="Flyer">Flyer</option>
-                <option value="Poster">Poster</option>
-                <option value="Business Card">Business Card</option>
-                <!-- Add more options as needed -->
-            </select>
+            <input 
+                type="text" 
+                name="printType" 
+                id="printType" 
+                class="w-full border rounded-lg"
+                required
+            />
         </div>
-
         <div class="mb-4">
             <label for="description" class="block font-bold mb-1">Description</label>
             <textarea 
@@ -24,7 +22,6 @@
                 required
             ></textarea>
         </div>
-
         <div class="mb-4">
             <label for="quantity" class="block font-bold mb-1">Quantity</label>
             <input 
@@ -36,7 +33,6 @@
                 min="1"
             />
         </div>
-
         <div class="mb-4">
             <label for="deadline" class="block font-bold mb-1">Deadline</label>
             <input 

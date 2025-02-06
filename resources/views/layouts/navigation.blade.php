@@ -19,6 +19,9 @@
                     <x-nav-link :href="url('/catalogues')" :active="request()->is('catalogues')">
                         {{ __('Catalogue') }}
                     </x-nav-link>
+                    <x-nav-link :href="url('/explore')" :active="request()->is('explore')">
+                        {{ __('Explore') }}
+                    </x-nav-link>
                     @if (Auth::check() && Auth::user()->role === 'admin')
                         <x-nav-link :href="route('admin.approvePrintshop.index')" :active="request()->routeIs('admin.approvePrintshop.index')">
                             {{ __('Admin Dashboard') }}
@@ -73,14 +76,14 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': ! open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('home.index')" :active="request()->routeIs('home.index')">
-                {{ __('Home') }}
-            </x-responsive-nav-link>
             <x-responsive-nav-link :href="url('/post_print_requests')" :active="request()->is('post_print_requests')">
                 {{ __('Post') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="url('/catalogues')" :active="request()->is('catalogues')">
                 {{ __('Catalogue') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="url('/explore')" :active="request()->is('explore')">
+                {{ __('Explore') }}
             </x-responsive-nav-link>
             @if (Auth::check() && Auth::user()->role === 'admin')
                 <x-responsive-nav-link :href="route('admin.approvePrintshop.index')" :active="request()->routeIs('admin.approvePrintshop.index')">

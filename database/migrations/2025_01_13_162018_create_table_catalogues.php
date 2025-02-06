@@ -22,8 +22,8 @@ class CreateTableCatalogues extends Migration
             $table->text('catalogueImages')->nullable();
             $table->string('title');
             $table->text('description');
-            $table->date('Start');
-            $table->date('End');
+            $table->date('start');
+            $table->date('end');
             $table->timestamps();
         });
     }
@@ -35,6 +35,6 @@ class CreateTableCatalogues extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('catalogue');
+        Schema::dropIfExists('catalogues');
     }
 }
