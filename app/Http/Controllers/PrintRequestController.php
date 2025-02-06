@@ -63,9 +63,9 @@ class PrintRequestController extends Controller
     
         // Only update if status is not already "accepted"
         if ($postPrintRequest->status !== 'accepted') {
-            $postPrintRequest->update([
-                'status' => 'accepted',
-            ]);
+            // $postPrintRequest->update([
+            //     'status' => 'accepted',
+            // ]);
             // Send approval email
             $UserC = User::findOrFail($postPrintRequest->user_id);
             $printshop = $printshop = PrintShops::findOrFail($this->getPrintShopByUserId($id));
@@ -92,4 +92,8 @@ class PrintRequestController extends Controller
         $printShop = PrintShops::where('user_id', $id)->first();
         return $printShop ? $printShop->id : null;
     }
+    public function getPrintRequestsByUserId($userId)
+{
+    return PostPrintRequest::where('user_id', $userId)->get();
+}
 }

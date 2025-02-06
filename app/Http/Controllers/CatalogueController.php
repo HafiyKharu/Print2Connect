@@ -21,10 +21,10 @@ class CatalogueController extends Controller
         // Filter print requests by 'printType' or 'description'
         $catalogues = Catalogue::when($search, function ($query) use ($search) {
             return $query->where('title', 'like', "%{$search}%")
-                         ->orWhere('description', 'like', "%{$search}%");
+                ->orWhere('description', 'like', "%{$search}%");
         })
-        ->latest()
-        ->paginate(10);
+            ->latest()
+            ->paginate(10);
         return view('catalogues.index', compact('catalogues'));
     }
 
@@ -32,14 +32,14 @@ class CatalogueController extends Controller
     {
         if (auth()->user()->role !== 'print shop') {
             return redirect()->route('catalogues.index')
-                            ->with('error', 'Only print shops can post a new service.');
+                ->with('error', 'Only print shops can post a new service.');
         }
 
         $validated = $request->validate([
-            'title'            => 'required|string|max:255',
-            'description'      => 'required|string',
-            'start'         => 'required|date',
-            'end'         => 'required|date',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'start' => 'required|date',
+            'end' => 'required|date',
         ]);
 
         if (request('catalogueImages')) {
@@ -51,11 +51,15 @@ class CatalogueController extends Controller
         Catalogue::create($validated);
 
         return redirect()->route('catalogues.index')
-                        ->with('success', 'New service posted successfully.');
+            ->with('success', 'New service posted successfully.');
     }
     public function getByUserId($userId)
     {
         $catalogues = Catalogue::where('user_id', $userId)->get();
         return $catalogues;
+    }
+    public function getCataloguesByUserId($userId)
+    {
+        return Catalogue::where('user_id', $userId)->get();
     }
 }

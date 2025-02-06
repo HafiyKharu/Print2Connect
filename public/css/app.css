@@ -183003,3 +183003,9 @@ select {
   }
 }
 
+.img-medium {
+    max-width: 300px; /* Adjust the size as needed */
+    max-height: 300px; /* Adjust the size as needed */
+    width: auto;
+    height: auto;
+}

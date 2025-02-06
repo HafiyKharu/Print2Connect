@@ -13,24 +13,16 @@ class UserController extends Controller
 {
     public function show(User $user)
     {
-        $items = null;
-
-        switch ($user->role) {
-            case 'customer':
-                $items = (new PrintRequestController)->getByUserId($user->id);
-                break;
-            case 'printshop':
-                $items = (new CatalogueController)->getByUserId($user->id);
-                break;
-            default:
-                $items = collect(); // Empty collection if no role matches
-                break;
+        $printRequests = [];
+        $catalogues = [];
+    
+        if ($user->role === 'customer') {
+            $printRequests = app(PrintRequestController::class)->getPrintRequestsByUserId($user->id);
+        } elseif ($user->role === 'print shop') {
+            $catalogues = app(CatalogueController::class)->getCataloguesByUserId($user->id);
         }
-
-        return view('users.show', [
-            'user' => $user,
-            'items' => $items,
-        ]);
+    
+        return view('users.show', compact('user', 'printRequests', 'catalogues'));
     }
 
     public function edit(User $user)

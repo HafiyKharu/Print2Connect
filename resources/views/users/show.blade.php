@@ -1,19 +1,10 @@
 <x-app-layout>
   <header class="mb-6 relative">
-    <div class="relative">  
-      <img 
-      src="{{$user->banner}}" 
-      alt="banner" 
-      class="rounded-lg"
-      />
-      <img 
-      src="{{$user->avatar}}" 
-      alt=""
-      class="rounded-full mr-2 absolute bottom-0 transform -translate-x-1/2 translate-y-1/2"
-      style="left: 50%; border-radius: 50%;"
-      height="150"
-      width="150"
-      />
+    <div class="relative">
+      <img src="{{$user->banner}}" alt="banner" class="rounded-lg" />
+      <img src="{{$user->avatar}}" alt=""
+        class="rounded-full mr-2 absolute bottom-0 transform -translate-x-1/2 translate-y-1/2"
+        style="left: 50%; border-radius: 50%;" height="150" width="150" />
     </div>
 
     <div class="flex justify-between items-center mb-8">
@@ -23,31 +14,50 @@
       </div>
       <div class="flex">
         @if (auth()->user()->is($user))
-        <a href="{{route('users.edit', $user)}}" class="rounded-full shadow p-2 border-gray-300 text-black text-xs mr-2">Edit Profile</a>
-        @endif
+      <a href="{{route('users.edit', $user)}}"
+        class="rounded-full shadow p-2 border-gray-300 text-black text-xs mr-2">Edit Profile</a>
+    @endif
         <x-follow-button :user="$user"></x-follow-button>
       </div>
     </div>
     @if(session()->has('message'))
-        <div class="border-gray-500 bg-green-400 p-2 w-full mb-2 rounded-lg" onclick="this.style.display='none'">
-            {{session()->get('message')}}
-            <span class="text-sm text-gray-500">(click to dismiss)</span>
-        </div>
-    @elseif(session()->has('error'))
-        <div class="alert alert-danger">
-            {{session()->get('error')}}
-        </div>
-    @endif
+    <div class="border-gray-500 bg-green-400 p-2 w-full mb-2 rounded-lg" onclick="this.style.display='none'">
+      {{session()->get('message')}}
+      <span class="text-sm text-gray-500">(click to dismiss)</span>
+    </div>
+  @elseif(session()->has('error'))
+  <div class="alert alert-danger">
+    {{session()->get('error')}}
+  </div>
+@endif
     <p class="text-sm">
       @if (auth()->user()->is($user))
-        {{$user->description ? $user->description : 'Add description. Go to edit profile.'}}
-      @endif
+      {{$user->description ? $user->description : 'Add description. Go to edit profile.'}}
+    @endif
       {{$user->description ? $user->description : null}}
     </p>
 
   </header>
 
-  @include('_timeline', [
-      'printRequest' => $printRequest
-  ])
+  <div class="border border-gray-300 rounded-lg">
+  @if (auth()->user()->role === 'admin')
+    <p class="p-4">yo admin</p>
+  @elseif (auth()->user()->role === 'print shop')
+    @forelse ($catalogues as $catalogue)
+    <div class="mb-4">
+    @include('catalogues._catalogues', ['catalogue' => $catalogue])
+    </div>
+  @empty
+  <p class="p-4">No catalogues. Create one!</p>
+@endforelse
+  @elseif (auth()->user()->role === 'customer')
+    @forelse ($printRequests as $printRequest)
+    <div class="mb-4">
+    @include('post_print_requests._printrequest', ['printRequest' => $printRequest])
+    </div>
+  @empty
+  <p class="p-4">No print requests. Create one!</p>
+@endforelse
+  @endif
+  </div>
 </x-app-layout>
