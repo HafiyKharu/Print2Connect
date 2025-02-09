@@ -3,5 +3,5 @@
    </svg>
     --}}
 
-    <img src="{{ asset('storage/logo/PRINT2CONNECT.png') }}"  x="0" y="0" width="110" height="110" alt="Logo PRINT2CONNECT" />
+    <img src="{{ asset('images/PRINT2CONNECT.png') }}"  x="0" y="0" width="110" height="110" alt="Logo PRINT2CONNECT" />
 

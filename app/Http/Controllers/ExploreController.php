@@ -17,10 +17,12 @@ class ExploreController extends Controller
 
         $customers = User::where('role', 'customer')
             ->where('username', 'like', '%' . $search . '%')
+            ->orderBy('username', 'asc')
             ->get();
 
         $printShops = User::where('role', 'print shop')
             ->where('username', 'like', '%' . $search . '%')
+            ->orderBy('username', 'asc')
             ->get();
 
         return view('explore', [

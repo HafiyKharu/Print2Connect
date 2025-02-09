@@ -97,6 +97,7 @@ class RegisteredUserController extends Controller
 
     public function storePrintshop(Request $request)
     {
+
         $request->validate([
             'username' => 'required|string|max:255|unique:users|alpha_dash',
             'name' => 'required|string|max:255',
@@ -109,7 +110,7 @@ class RegisteredUserController extends Controller
         ]);
 
         $user = User::create([
-            'role' => 'printshop',
+            'role' => 'print shop',
             'username' => $request->username,
             'name' => $request->name,
             'email' => $request->email,
@@ -126,9 +127,7 @@ class RegisteredUserController extends Controller
             'is_approved' => false,
         ]);
 
-        Auth::login($user);
-        event(new Registered($user));
-
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('login')->
+            with('status', 'You need to wait for the admin to approve or reject your account. It will send you an email once your account is approved.');
     }
 }

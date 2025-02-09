@@ -1,52 +1,103 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-weight-bold h4 mb-0">
             {{ __('Approve Print Shop') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
-                <h1 class="text-2xl font-bold mb-4">Approve Print Shop</h1>
-                <table class="min-w-full border">
-                    <thead>
-                        <tr>
-                            <th class="border px-4 py-2">ID</th>
-                            <th class="border px-4 py-2">User Name</th>
-                            <th class="border px-4 py-2">Business Reg No</th>
-                            <th class="border px-4 py-2">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($printshops as $printshop)
+    <div class="container my-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="text-center font-bold mb-4">Approve Print Shop</h1>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover text-center">
+                        <thead class="thead-light">
                             <tr>
-                                <td class="border px-4 py-2">{{ $printshop->id }}</td>
-                                <td class="border px-4 py-2">{{ $printshop->user->name }}</td>
-                                <td class="border px-4 py-2">{{ $printshop->businessRegNo }}</td>
-                                <td class="border px-4 py-2">
-                                    <div class="flex flex-col space-y-2">
-                                        <a href="{{ route('admin.approvePrintshop.show', $printshop->id) }}" class="inline-block px-4 py-2 bg-blue-500 text-white rounded text-center">
-                                            {{ __('View Details') }}
-                                        </a>
-                                        <form method="POST" action="{{ route('admin.approvePrintshop.update', $printshop->id) }}" class="inline-block" onsubmit="return confirm('Are you sure you want to approve this print shop?');">
-                                            @csrf
-                                            <x-button class="bg-green-500">
-                                                {{ __('Approve') }}
-                                            </x-button>
-                                        </form>
-                                        <form method="POST" action="{{ route('admin.rejectPrintshop', $printshop->id) }}" class="inline-block" onsubmit="return confirm('Are you sure you want to reject this print shop?');">
-                                            @csrf
-                                            <x-button class="bg-red-500">
-                                                {{ __('Reject') }}
-                                            </x-button>
-                                        </form>
-                                    </div>
-                                </td>
+                                <th>ID</th>
+                                <th>User Name</th>
+                                <th>Business Reg No</th>
+                                <th>Actions</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($printshops as $printshop)
+                                <tr>
+                                    <td>{{ $printshop->id }}</td>
+                                    <td>{{ $printshop->user->name }}</td>
+                                    <td>{{ $printshop->businessRegNo }}</td>
+                                    <td>
+                                        <!-- View Details Button triggers the modal -->
+                                        <button class="btn btn-primary mb-2 w-100" data-toggle="modal"
+                                            data-target="#viewDetailsModal-{{ $printshop->id }}">
+                                            View Details
+                                        </button>
+
+                                        <!-- Approve Form -->
+                                        <form method="POST"
+                                            action="{{ route('admin.approvePrintshop.update', $printshop->id) }}"
+                                            onsubmit="return confirm('Are you sure you want to approve this print shop?');"
+                                            class="d-inline-block mb-2 w-100">
+                                            @csrf
+                                            <button type="submit" class="btn btn-success w-100">
+                                                Approve
+                                            </button>
+                                        </form>
+
+                                        <!-- Reject Form -->
+                                        <form method="POST" action="{{ route('admin.rejectPrintshop', $printshop->id) }}"
+                                            onsubmit="return confirm('Are you sure you want to reject this print shop?');"
+                                            class="d-inline-block w-100">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger w-100">
+                                                Reject
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                                <!-- Modal for View Details -->
+                                <div class="modal fade" id="viewDetailsModal-{{ $printshop->id }}" tabindex="-1"
+                                    role="dialog" aria-labelledby="viewDetailsModalLabel-{{ $printshop->id }}"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="viewDetailsModalLabel-{{ $printshop->id }}">
+                                                    Print Shop Details
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body text-left">
+                                                <p><strong>User Name:</strong> {{ $printshop->user->username }}</p>
+                                                <br/>
+                                                <p><strong>Business Registration Number:</strong>
+                                                    {{ $printshop->businessRegNo }}</p>
+                                                <br/>
+                                                <p><strong>Address:</strong> {{ $printshop->address }}</p>
+                                                <br/>
+                                                <p><strong>Contact Number:</strong> {{ $printshop->contactNo }}</p>
+                                                <br/>
+                                                <p><strong>Service Description:</strong>
+                                                    {{ $printshop->serviceDescription }}</p>
+                                                <br/>
+                                                <p><strong>Created account at:</strong> {{ $printshop->created_at ? $printshop->created_at->format('h:i A d/m/Y') : 'N/A' }} </p>
+                                                <br/>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End of Modal -->
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

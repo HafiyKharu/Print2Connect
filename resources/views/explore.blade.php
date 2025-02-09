@@ -7,16 +7,16 @@
     <form action="{{ route('explore.index') }}" method="GET" class="mt-4 mb-4">
         <div class="input-group">
             <input type="text" name="search" class="form-control" placeholder="Search by username" value="{{ request('search') }}">
-            <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">Search</button>
-            </div>
         </div>
     </form>
+    <div class="flex justify-between mb-2">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
 
     <div class="row">
         <!-- Customers Column -->
         <div class="col-md-6 ">
-            <h2 class="mt-4 mb-4">Customers</h2>
+            <h2 class="mt-4 mb-4 text-center font-bold">Customers</h2>
             @if($customers->isEmpty())
                 <p class="text-info">No customers found.</p>
             @else
@@ -37,7 +37,7 @@
 
         <!-- Print Shops Column -->
         <div class="col-md-6">
-            <h2 class="mt-4 mb-4">Print Shops</h2>
+            <h2 class="mt-4 mb-4 text-center font-bold">Print Shops</h2>
             @if($printShops->isEmpty())
                 <p class="text-info">No print shops found.</p>
             @else
