@@ -1,3 +1,4 @@
+<!-- filepath: /c:/laragon/www/Print2Connect/resources/views/users/show.blade.php -->
 <x-app-layout>
   <header class="mb-6 relative">
     <div class="relative">
@@ -9,7 +10,7 @@
 
     <div class="flex justify-between items-center mb-8">
       <div style="max-width: 270px">
-        <h2 class="font-blod text-2xl">{{$user->name}}</h2>
+        <h2 class="font-bold text-2xl">{{$user->name}}</h2>
         <p class="text-sm">Joined {{$user->created_at->diffForHumans()}}</p>
       </div>
       <div class="flex">
@@ -30,22 +31,71 @@
     {{session()->get('error')}}
   </div>
 @endif
-    <p class="text-sm">
-      @if (auth()->user()->is($user))
-      {{$user->description ? $user->description : 'Add description. Go to edit profile.'}}
-    @endif
-      {{$user->description ? $user->description : null}}
-    </p>
-
   </header>
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5 class="card-title mb-0">Details</h5>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-borderless">
+          <tbody>
+            @if(!empty($printshop))
+        <tr>
+          <th class="align-middle" scope="row">Business Registration Number</th>
+          <td class="align-middle">:</td>
+          <td class="align-middle">{{ $printshop->businessRegNo }}</td>
+        </tr>
+        <tr>
+          <th class="align-middle" scope="row">Email</th>
+          <td class="align-middle">:</td>
+          <td class="align-middle">{{ $user->email }}</td>
+        </tr>
+        <tr>
+          <th class="align-middle" scope="row">Contact Number</th>
+          <td class="align-middle">:</td>
+          <td class="align-middle">{{ $printshop->contactNo }}</td>
+        </tr>
+        <tr>
+          <th class="align-middle" scope="row">Address</th>
+          <td class="align-middle">:</td>
+          <td class="align-middle">{{ $printshop->address }}</td>
+        </tr>
+        <tr>
+          <th class="align-middle" scope="row">Service Description</th>
+          <td class="align-middle">:</td>
+          <td class="align-middle">{{ $printshop->serviceDescription }}</td>
+        </tr>
+      @elseif (!empty($customer))
+    <tr>
+      <th class="align-middle" scope="row">Email</th>
+      <td class="align-middle">:</td>
+      <td class="align-middle">{{ $user->email }}</td>
+    </tr>
+    <tr>
+      <th class="align-middle" scope="row">Phone Number</th>
+      <td class="align-middle">:</td>
+      <td class="align-middle">{{ $customer->phoneNumber }}</td>
+    </tr>
+    <tr>
+      <th class="align-middle" scope="row">Address</th>
+      <td class="align-middle">:</td>
+      <td class="align-middle">{{ $customer->address }}</td>
+    </tr>
+  @endif
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
   @if(!empty($printRequests))
-      @include('users._timelineService', [
-          'printRequest' => $printRequests
-      ])
+    @include('users._timelineService', [
+    'printRequest' => $printRequests
+    ])
   @elseif(!empty($catalogues))
-      @include('users._timelineCatalogue', [
-          'catalogue' => $catalogues
-      ])
+    @include('users._timelineCatalogue', [
+    'catalogue' => $catalogues
+    ])
   @endif
 </x-app-layout>
