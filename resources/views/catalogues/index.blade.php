@@ -16,7 +16,7 @@
             @if(auth()->check() && auth()->user()->role === 'print shop')
                 <!-- Vertically centered scrollable modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postCatalogue">
-                    Post Print Service Request
+                    Post Catalogue
                 </button>
                 <!-- Modal -->
                 <div class="modal fade" id="postCatalogue" tabindex="-1" 
@@ -24,7 +24,7 @@
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="postCatalogue">Post Print Request</h5>
+                                <h5 class="modal-title" id="postCatalogue">Post Catalogue</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -34,8 +34,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" form="postCatalogueForm" class="btn btn-primary">Post Print
-                                    Request</button>
+                                <button type="submit" form="postCatalogueForm" class="btn btn-primary">Post Catalogue</button>
                             </div>
                         </div>
                     </div>
