@@ -40,7 +40,10 @@
             <div class="w-full">
                 <div class="flex justify-between">
                     <h5 class="font-bold">
-                        {{ $printRequest->user->name }}
+                        <a href="/users/{{ $printRequest->user->username}}">
+                            {{ $printRequest->user->username }}
+                            <span class="badge badge-info">Customer</span>
+                        </a>
                     </h5>
                     <!-- If you want to allow only the owner to delete/edit -->
                     @if(auth()->check() && auth()->user()->is($printRequest->user))
@@ -82,8 +85,12 @@
                             @if($printRequest->status == 'opened')
                                 <span class="badge badge-info">{{ $printRequest->status }}</span>
                             @elseif($printRequest->status == 'accepted')
-                                <span class="badge badge-success">{{ $printRequest->status }}</span>
-                                @endif
+                            <div>
+                                <a href="/users/{{$printRequest->accepted_by}}">
+                                <span class="badge badge-success">{{ $printRequest->status }} by {{$printRequest->accepted_by}}</a></span>
+                            </div>
+                                
+                            @endif
                         </td>
                     </tr>
                 </tbody>
@@ -104,7 +111,14 @@
                         <div class="w-full">
                             <div class="flex justify-between">
                                 <h5 class="font-bold">
-                                    {{ $comment->user->name }}
+                                    <a href="/users/{{ $comment->user->username}}">
+                                        {{ $comment->user->username }}
+                                        @if($comment->user->role == 'customer')
+                                        <span class="badge badge-info">Customer</span>
+                                        @elseif($comment->user->role == 'print shop')
+                                        <span class="badge badge-info">Print Shop</span>
+                                        @endif
+                                    </a>
                                 </h5>
                                 <!-- If you want to allow only the owner to delete/edit -->
                                 @if(auth()->check() && auth()->user()->is($printRequest->user))

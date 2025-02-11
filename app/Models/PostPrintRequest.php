@@ -16,6 +16,7 @@ class PostPrintRequest extends Model
         'quantity',
         'deadline',
         'status',
+        'accepted_by',
     ];
 
     public function getCatalogueImageAttribute($value)

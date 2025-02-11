@@ -24,6 +24,7 @@ class CreateTablePostprintrequest extends Migration
             $table->integer('quantity');
             $table->dateTime('deadline');
             $table->string('status');
+            $table->string('accepted_by')->nullable();
             $table->timestamps();
         });
     }

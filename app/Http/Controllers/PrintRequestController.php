@@ -60,15 +60,16 @@ class PrintRequestController extends Controller
         if (auth()->user()->role !== 'print shop') {
             return redirect()->route('post_print_requests.index')->with('error', 'Not authorized.');
         }
-    
+        $printshop = $printshop = PrintShops::findOrFail($this->getPrintShopByUserId($id));
         // Only update if status is not already "accepted"
         if ($postPrintRequest->status !== 'accepted') {
             $postPrintRequest->update([
                 'status' => 'accepted',
+                'accepted_by' => $printshop->user->username,
             ]);
             // Send approval email
             $UserC = User::findOrFail($postPrintRequest->user_id);
-            $printshop = $printshop = PrintShops::findOrFail($this->getPrintShopByUserId($id));
+           
             $details = [
                 'title' => 'Your Print Request has been Accepted',
                 'body' => 'The detail of print shop:',

@@ -2,7 +2,7 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <img src="{{ asset('images/PRINT2CONNECT.png') }}" class="img-fluid" alt="Logo PRINT2CONNECT" style="width: 25rem; height: auto;" />
             </a>
         </x-slot>
 

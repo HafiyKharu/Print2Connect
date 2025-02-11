@@ -10,7 +10,10 @@
             <div class="w-full">
                 <div class="flex justify-between">
                     <h5 class="font-bold">
-                        {{ $catalogue->user->name }}
+                        <a href="/users/{{ $catalogue->user->username}}">
+                        {{ $catalogue->user->username }}
+                        <span class="badge badge-info">Print Shop</span>
+                        </a>
                     </h5>
                     <!-- If you want to allow only the owner to delete/edit -->
                     @if(auth()->check() && auth()->user()->is($catalogue->user))
@@ -51,15 +54,15 @@
         <br />
         <div class="text-center">
             <img src="{{ Storage::url($catalogue->catalogueImages) }}" class="rounded mx-auto d-block" alt="catalogue"
-                width="300" height="300" data-toggle="modal" data-target="#imageModal" style="cursor: pointer;">
+                width="300" height="300" data-toggle="modal" data-target="#imageModal-{{ $catalogue->id }}" style="cursor: pointer;">
         </div>
         
         <!-- Modal -->
-        <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal fade" id="imageModal-{{ $catalogue->id }}" tabindex="-1" aria-labelledby="imageModalLabel-{{ $catalogue->id }}" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+                        <h5 class="modal-title" id="imageModalLabel-{{ $catalogue->id }}">Image Preview</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
