@@ -22,6 +22,7 @@ class ExploreController extends Controller
 
         $printShops = User::where('role', 'print shop')
             ->where('username', 'like', '%' . $search . '%')
+            ->where('status', 'approved')
             ->orderBy('username', 'asc')
             ->get();
 
