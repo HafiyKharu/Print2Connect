@@ -16,7 +16,10 @@ class ExploreController extends Controller
         $search = $request->input('search');
 
         $customers = User::where('role', 'customer')
-            ->where('username', 'like', '%' . $search . '%')
+            ->where(function ($query) use ($search) {
+                $query->where('users.username', 'like', '%' . $search . '%')
+                    ->orWhere('users.name', 'like', '%' . $search . '%');
+            })
             ->orderBy('username', 'asc')
             ->get();
 
