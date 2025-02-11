@@ -20,11 +20,14 @@ class ExploreController extends Controller
             ->orderBy('username', 'asc')
             ->get();
 
-        $printShops = User::where('role', 'print shop')
-            ->where('username', 'like', '%' . $search . '%')
-            ->where('status', 'approved')
-            ->orderBy('username', 'asc')
+            $printShops = User::join('print_shops', 'users.id', '=', 'print_shops.user_id')
+            ->where('users.role', 'print shop')
+            ->where('users.username', 'like', '%' . $search . '%')
+            ->where('print_shops.is_approved', 1)
+            ->orderBy('users.username', 'asc')
+            ->select('users.*')
             ->get();
+        
 
         return view('explore', [
             'customers' => $customers,
