@@ -20,14 +20,17 @@ class ExploreController extends Controller
             ->orderBy('username', 'asc')
             ->get();
 
-            $printShops = User::join('print_shops', 'users.id', '=', 'print_shops.user_id')
+        $printShops = User::join('print_shops', 'users.id', '=', 'print_shops.user_id')
             ->where('users.role', 'print shop')
-            ->where('users.username', 'like', '%' . $search . '%')
+            ->where(function ($query) use ($search) {
+                $query->where('users.username', 'like', '%' . $search . '%')
+                    ->orWhere('users.name', 'like', '%' . $search . '%');
+            })
             ->where('print_shops.is_approved', 1)
             ->orderBy('users.username', 'asc')
             ->select('users.*')
             ->get();
-        
+
 
         return view('explore', [
             'customers' => $customers,
