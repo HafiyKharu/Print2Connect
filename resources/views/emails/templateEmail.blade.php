@@ -9,7 +9,7 @@
     <x-slot name="logo">
         <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
     </x-slot>
-    {{-- <img src="{{ $message->embed(storage_path('app/public/logo/PRINT2CONNECT.png')) }}"> --}}
+    <img src="{{ $message->embed(storage_path('app/public/PRINT2CONNECT.png')) }}">
     <h1>{{ $details['title'] }}</h1>
     {{-- <p>{{ $details['body'] }}</p> --}}
     <br>

@@ -71,7 +71,7 @@ class PrintRequestController extends Controller
             $UserC = User::findOrFail($postPrintRequest->user_id);
            
             $details = [
-                'title' => 'Your Print Request has been Accepted',
+                'title' => 'Your Print Request for ' . $postPrintRequest->printType . ' has been Accepted',
                 'body' => 'The detail of print shop:',
                 'printshop' => $printshop,
                 'closer' => "Kindly chat the print shop by yourself 🥳. Thank you for using our services. We hope to see you posting again 😄",

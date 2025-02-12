@@ -38,7 +38,7 @@ class TemplateEmail extends Mailable
     public function attachments(): array
     {
         return [
-            storage_path('app/public/logo/PRINT2CONNECT.png'), // Adjust path as needed
+            storage_path('app/public/PRINT2CONNECT.png'), // Adjust path as needed
         ];
     }
 }
