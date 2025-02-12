@@ -9,7 +9,9 @@
     <x-slot name="logo">
         <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
     </x-slot>
-    <img src="{{ asset('images/PRINT2CONNECT.png') }}" class="img-fluid" alt="Logo PRINT2CONNECT" style="width: 10rem; height: auto;" />
+    <div class="text-center">
+        <img src="{{ asset('images/PRINT2CONNECT.png') }}" class="img-fluid" alt="Logo PRINT2CONNECT" style="width: 20rem; height: auto;" />
+    </div>
     <h1>{{ $details['title'] }}</h1>
     {{-- <p>{{ $details['body'] }}</p> --}}
     <br>
