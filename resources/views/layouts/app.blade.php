@@ -65,7 +65,7 @@
                 <div class="lg:flex lg:justify-between">
 
                     <div class="lg:w-32">
-                        @include('_sidebar-links')
+                        
                     </div>
 
                     <div class="flex-1 lg:mx-10" style="max-width: 700px">

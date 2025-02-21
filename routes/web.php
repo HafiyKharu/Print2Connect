@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ExploreController;
-use App\Http\Controllers\TweetLikesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FollowController;
 use Illuminate\Support\Facades\Route;
@@ -38,9 +37,6 @@ Route::get('users/{user:username}/edit', [userController::class, 'edit'])
 Route::patch('users/{user:username}', [userController::class, 'update'])
      ->middleware('auth')
      ->name('users.update');
-//Route::get('/explore', [ExploreController::class, 'index']);
-Route::post('home/{tweet}/like', [TweetLikesController::class, 'store']);
-Route::delete('home/{tweet}/like', [TweetLikesController::class, 'destroy']);
 // Print Requests
 Route::get('/post_print_requests', [PrintRequestController::class, 'index'])->name('post_print_requests.index');
 Route::post('/post_print_requests', [PrintRequestController::class, 'store'])->name('post_print_requests.store');
@@ -67,8 +63,5 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 Route::get('/explore', [ExploreController::class, 'index'])->name('explore.index');
-
-// Route::get('/postprintrequests', [PrintRequestController::class, 'index'])->name('post_print_requests.index.index');
-// Route::post('/postprintrequests', [PrintRequestController::class, 'store'])->name('post_print_requests.index.store');
 
 require __DIR__ . '/auth.php';
